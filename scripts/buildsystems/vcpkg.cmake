@@ -255,6 +255,15 @@ set(_UNUSED ${CMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY})
 set(_UNUSED ${CMAKE_FIND_PACKAGE_NO_SYSTEM_PACKAGE_REGISTRY})
 set(_UNUSED ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP})
 
+
+# Set the compile flags to make the binaries can be scanned by ApiScan tool.
+set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /DEBUG /DEBUGTYPE:cv,fixup /INCREMENTAL:NO /OPT:REF /OPT:ICF")
+add_compile_options(/bigobj)
+add_compile_options(/Zi)
+add_compile_options(/GF)
+add_compile_options(/Gy)
+message(STATUS "Set the compile flags to make the binaries can be scanned by ApiScan tool")
+
 if(NOT _CMAKE_IN_TRY_COMPILE)
     file(TO_CMAKE_PATH "${VCPKG_CHAINLOAD_TOOLCHAIN_FILE}" _chainload_file)
     file(TO_CMAKE_PATH "${_VCPKG_ROOT_DIR}" _root_dir)

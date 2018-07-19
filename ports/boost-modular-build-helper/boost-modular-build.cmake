@@ -188,6 +188,12 @@ function(boost_modular_build)
 
     file(TO_CMAKE_PATH "${_bm_DIR}/nothing.bat" NOTHING_BAT)
     set(TOOLSET_OPTIONS " <cxxflags>/EHsc <compileflags>-Zm800 <compileflags>-nologo")
+
+    # Set the compile flags to make the binaries can be scanned by ApiScan tool.
+    set(TOOLSET_OPTIONS "${TOOLSET_OPTIONS} <compileflags>-bigobj <compileflags>-Zi <compileflags>-GF <compileflags>-Gy <compileflags>-FS")
+    set(TOOLSET_OPTIONS "${TOOLSET_OPTIONS} <linkflags>-DEBUG <linkflags>-DEBUGTYPE:cv,fixup <linkflags>-INCREMENTAL:NO <linkflags>-OPT:REF <linkflags>-OPT:ICF")
+    message(STATUS "========Set the TOOLSET_OPTIONS flags to ${TOOLSET_OPTIONS}========")
+    
     if(VCPKG_CMAKE_SYSTEM_NAME STREQUAL "WindowsStore")
         if(VCPKG_PLATFORM_TOOLSET MATCHES "v141")
             find_path(PATH_TO_CL cl.exe)
